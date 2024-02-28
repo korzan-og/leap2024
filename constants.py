@@ -1,0 +1,1 @@
+produce_schema="{\"fields\":[{\"name\":\"version\",\"type\":\"long\"},{\"name\":\"inputs\",\"type\":{\"items\":{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"inputs\",\"namespace\":\"Record\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Record\",\"type\":\"record\"}"
