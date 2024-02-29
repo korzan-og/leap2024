@@ -130,7 +130,7 @@ def kafkaConsumer(willCommit):
     topic=configParser.get('confluent', 'read.topic')
     logging.warn("Started consumer on " + str(startTime))
     counter = 0
-    config={'bootstrap.servers': broker,'security.protocol':protocol, 'group.id':groupId,'sasl.mechanisms':mechanism,'sasl.username':username,'sasl.password':password, 'auto.offset.reset':autoOffsetReset,'enable.auto.offset.store': True, 'enable.auto.commit': False} # For cloud
+    config={'bootstrap.servers': broker,'security.protocol':protocol, 'group.id':groupId,'sasl.mechanisms':mechanism,'sasl.username':username,'sasl.password':password, 'auto.offset.reset':autoOffsetReset,'enable.auto.offset.store': True, 'enable.auto.commit': True} # For cloud
     is_specific = "true"
 
     if is_specific:
@@ -148,6 +148,7 @@ def kafkaConsumer(willCommit):
                                          dict_to_obj)
     
     consumer = Consumer(config, logger=logging)
+    key = username=configParser.get('confluent', 'key')
     try:
         print("Consuming Topic  " + topic)
         consumer.subscribe([topic])
@@ -174,12 +175,13 @@ def kafkaConsumer(willCommit):
                 logging.info("NewRequest is here : ")
                 # logging.info(str(sas_to_request(sas)))
                 newRequest=sas_to_request(sas)
-                key=str(msg.offset())
+                # key=str(msg.offset())
                 logging.info("Message #" + str(msg.offset()))
                 # logging.info("version : "+ str(sas.version) + " inputs : "+str(sas.AVG_SAL_L3M) + " " + str(sas.BUREAU_SCORE)+ " " + str(sas.CARD_TYPE)+ " " + str(sas.CREDIT_LIMIT)+ " " + str(sas.CURRENT_BALANCE_TO_CREDIT_LIMIT)+ " " + str(sas.DELINQUENT_INDICATOR))
-                process_msg(key,newRequest)
+                process_msg(str(key),newRequest)
                 if(willCommit==True):
                     consumer.commit(asynchronous=willCommit)
+                key = key+1
             # userId = userId + 1
     finally:
         endTime = time.time()

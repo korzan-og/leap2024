@@ -88,7 +88,7 @@ def process_msg(key,message):
 
 if __name__ == "__main__":
     successfullRun = False
-    kafkaConsumer(False)
+    kafkaConsumer(True)
     if successfullRun == False:
         logging.error("Run failed! Function {} couldn't executed".format(function))
         sys.exit()
