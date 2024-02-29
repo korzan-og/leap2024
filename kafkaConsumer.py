@@ -148,7 +148,7 @@ def kafkaConsumer(willCommit):
                                          dict_to_obj)
     
     consumer = Consumer(config, logger=logging)
-    key = username=configParser.get('confluent', 'key')
+    key = configParser.get('confluent', 'key')
     try:
         print("Consuming Topic  " + topic)
         consumer.subscribe([topic])
